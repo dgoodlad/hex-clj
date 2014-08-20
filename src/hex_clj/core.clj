@@ -53,3 +53,11 @@
       (and (> dx dy) (> dx dz)) [(- 0 ry rz) ry rz]
       (> dy dz)                 [rx (- 0 rx rz) rz]
       :else                     [rx ry (- 0 rx ry)])))
+
+(defn in-range
+  "Returns a seq of all hexes within a range n of a hex"
+  [n [x y z :as hex]]
+  (for [dx (range (- 0 n) (+ 1 n))
+        dy (range (max (- 0 n) (- 0 dx n)) (+ 1 (min n (- n dx))))]
+    (let [dz (- 0 dx dy)]
+      (map + hex [dx dy dz]))))

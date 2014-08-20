@@ -32,3 +32,13 @@
   (testing "Drawing a line"
     (is (= [[0 0 0] [1 -1 0] [2 -1 -1] [3 -2 -1] [4 -3 -1]]
            (line [0 0 0] [4 -3 -1])))))
+
+(deftest test-in-range
+  (testing "Hexes in range of origin"
+    (is (= [[0 0 0]] (in-range 0 [0 0 0])))
+    (is (= 7 (count (in-range 1 [0 0 0]))))
+    (is (= [[-1 0 1] [-1 1 0] [0 -1 1]
+            [0 0 0]
+            [0 1 -1] [1 -1 0] [1 0 -1]]
+           (in-range 1 [0 0 0])))
+    (is (= 19 (count (in-range 2 [0 0 0]))))))
