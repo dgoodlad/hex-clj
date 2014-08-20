@@ -41,4 +41,7 @@
             [0 0 0]
             [0 1 -1] [1 -1 0] [1 0 -1]]
            (in-range 1 [0 0 0])))
-    (is (= 19 (count (in-range 2 [0 0 0]))))))
+    (is (= 19 (count (in-range 2 [0 0 0])))))
+  (testing "Hexes in range of two points"
+    (is (= 0 (count (in-range 1 [0 0 0] [-3 0 3]))))
+    (is (= [[-1 0 1]] (in-range 1 [0 0 0] [-2 0 2])))))

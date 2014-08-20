@@ -54,10 +54,18 @@
       (> dy dz)                 [rx (- 0 rx rz) rz]
       :else                     [rx ry (- 0 rx ry)])))
 
+(defn- range-intersect
+  [n coll]
+  [(apply max (map #(- % n) coll))
+   (apply min (map #(+ % n) coll))])
+
 (defn in-range
-  "Returns a seq of all hexes within a range n of a hex"
-  [n [x y z :as hex]]
-  (for [dx (range (- 0 n) (+ 1 n))
-        dy (range (max (- 0 n) (- 0 dx n)) (+ 1 (min n (- n dx))))]
-    (let [dz (- 0 dx dy)]
-      (map + hex [dx dy dz]))))
+  "Returns a seq of all hexes within range n of given hexes"
+  [n & hexes]
+  (let [[[x-min x-max]
+         [y-min y-max]
+         [z-min z-max]] (map #(range-intersect n %) (apply map list hexes))]
+    (for [x (range x-min (+ 1 x-max))
+          y (range (max y-min (- 0 x z-max)) (+ 1 (min y-max (- 0 x z-min))))]
+      (let [z (- 0 x y)]
+        [x y z]))))
