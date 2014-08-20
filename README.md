@@ -2,6 +2,9 @@
 
 A Clojure library of functions to work with hex grid systems
 
+Heavily inspired by Amit Patel's work at
+http://www.redblobgames.com/grids/hexagons/
+
 ## Usage
 
 FIXME
