@@ -30,3 +30,26 @@
   [a b]
   (distance (apply c/axial-to-cube a)
             (apply c/axial-to-cube b)))
+
+(defn- sample
+  [a b]
+  (let [n         (distance a b)
+        inv-n     (/ 1 n)
+        b-minus-a (map - b a)]
+    (map (fn [i] (map (fn [a b-minus-a]
+                        (+ a (* b-minus-a inv-n i))) a b-minus-a))
+         (range (+ 1 n)))))
+
+(defn line
+  [a b]
+  (map round (sample a b)))
+
+(defn round
+  "Rounds a cube coordinate to the nearest integer hex"
+  [[x y z :as hex]]
+  (let [[rx ry rz :as rounded] (map math/round hex)
+        [dx dy dz :as diff]    (map - rounded hex)]
+    (cond
+      (and (> dx dy) (> dx dz)) [(- 0 ry rz) ry rz]
+      (> dy dz)                 [rx (- 0 rx rz) rz]
+      :else                     [rx ry (- 0 rx ry)])))

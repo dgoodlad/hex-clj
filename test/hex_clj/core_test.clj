@@ -22,3 +22,13 @@
     (let [origin [0 0]]
       (is (= 1 (axial-distance origin (cube-neighbor 0 origin))))
       (is (= 2 (distance origin [2 -2]))))))
+
+(deftest test-round
+  (testing "Rounding to the nearest hex"
+    (is (= [0 0 0] (round [0.1 0 -0.1])))
+    (is (= [1 0 -1] (round [1 0.9 -1])))))
+
+(deftest test-line
+  (testing "Drawing a line"
+    (is (= [[0 0 0] [1 -1 0] [2 -1 -1] [3 -2 -1] [4 -3 -1]]
+           (line [0 0 0] [4 -3 -1])))))
