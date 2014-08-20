@@ -69,3 +69,17 @@
           y (range (max y-min (- 0 x z-max)) (+ 1 (min y-max (- 0 x z-min))))]
       (let [z (- 0 x y)]
         [x y z]))))
+
+(defn- scale
+  [i vec]
+  (map (partial * i) vec))
+
+(defn ring
+  "Returns a seq of all hexes on a ring r hexes from hex"
+  [r hex]
+  (let [corners (map (partial scale r) (concat (take-last 2 cube-neighbors)
+                                           (take 4 cube-neighbors)))]
+    (apply concat
+     (map-indexed (fn [i h]
+                    (take r (iterate #(cube-neighbor i %) h)))
+                  corners))))
